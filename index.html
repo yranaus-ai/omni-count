@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Omni Count Clock</title>
+  <style>
+    body {
+      margin: 0;
+      background: #05070f;
+      color: #00ffd5;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    h1 { opacity: 0.6; font-size: 18px; }
+
+    #oc {
+      font-size: 34px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #note {
+      margin-top: 10px;
+      font-size: 12px;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Omni Count (OC)</h1>
+<div id="oc">Loading...</div>
+<div id="note">Atomic-time based chronology system</div>
+
+<script>
+  const epoch = Date.parse("1945-07-16T11:29:21Z");
+  const OT_PER_SECOND = 9192631770;
+
+  function format(n) {
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ":");
+  }
+
+  function update() {
+    const now = Date.now();
+    const seconds = (now - epoch) / 1000;
+    const oc = Math.floor(seconds * OT_PER_SECOND);
+
+    document.getElementById("oc").textContent = "OC " + format(oc);
+  }
+
+  setInterval(update, 50);
+  update();
+</script>
+
+</body>
+</html>
